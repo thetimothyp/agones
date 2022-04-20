@@ -171,6 +171,13 @@ Once the container has been built, push it to your repository
 docker push ${REPOSITORY}/nodejs-simple-server:0.1
 ```
 
+#### Note for Apple M1 users: You will need to use docker buildx to build for the amd64 architecture. 
+Edit the build command in `Makefile` with the following:
+```Makefile
+build: cd $(root_path) && docker buildx build --platform linux/amd64 -f $(project_path)/Dockerfile --push --tag=$(server_tag) .
+```
+This will automatically push the built image to your repository, so there is no need to run `docker push` separately.
+
 ### 3. Run the customized gameserver
 
 Now it is time to deploy your newly created gameserver container into your Agones cluster. 
